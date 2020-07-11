@@ -15,10 +15,17 @@
 package com.google.sps.servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.SortDirection;
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
@@ -26,7 +33,62 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    response.setContentType("text/html;");
-    response.getWriter().println("<h1>Hello world!</h1>");
+
+    Query query = new Query("Comment");
+
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    PreparedQuery results = datastore.prepare(query);
+
+    ArrayList<String> messages = new ArrayList<String>();
+    for (Entity entity : results.asIterable()) {
+      String comment = (String) entity.getProperty("content");
+
+      messages.add(comment);
+    }
+
+    String json = convertToJson(messages);
+
+    response.setContentType("application/json;");
+    response.getWriter().println(json);
+  }
+
+  /**
+   * Converts an instance into a JSON string using manual String concatentation.
+   */
+  private String convertToJson(ArrayList<String> messages) {
+    String json = "[";
+    for(int i = 0; i < messages.size(); ++i){
+        if(i != 0)
+            json += ", ";
+        json += '{';
+        json += "\"comment"+ "\": ";
+        json += "\"" + messages.get(i) + "\"";
+        json += '}';
+    }
+    json += "]";
+    return json;
+  }
+
+  @Override
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    // Get the input from the form.
+    String comment = getSubmitComment(request);
+
+    Entity commentEntity = new Entity("Comment");
+    commentEntity.setProperty("content", comment);
+
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    datastore.put(commentEntity);
+    
+    // Redirect back to the HTML page.
+    response.sendRedirect("/index.html");
+  }
+
+  /** Returns the choice entered by the player, or -1 if the choice was invalid. */
+  private String getSubmitComment(HttpServletRequest request) {
+    // Get the input from the form.
+    String comment = request.getParameter("text-input");
+
+    return comment;
   }
 }

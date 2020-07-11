@@ -58,3 +58,62 @@ function addRandomStories() {
   const storyContainer = document.getElementById('story-container');
   storyContainer.innerText = story;
 }
+
+/**
+ * Fetches a greeting from the server and adds it to the DOM.
+ */
+function getGreeting() {
+  console.log('Fetching a greeting.');
+
+  // The fetch() function returns a Promise because the request is asynchronous.
+  const responsePromise = fetch('/data');
+
+  // When the request is complete, pass the response into handleResponse().
+  responsePromise.then(handleResponse);
+}
+
+/**
+ * Handles response by converting it to text and passing the result to
+ * addQuoteToDom().
+ */
+function handleResponse(response) {
+  console.log('Handling the response.');
+
+  // response.text() returns a Promise, because the response is a stream of
+  // content and not a simple variable.
+  const textPromise = response.text();
+
+  // When the response is converted to text, pass the result into the
+  // addQuoteToDom() function.
+  textPromise.then(addGreetToDom);
+}
+
+/** Adds a random quote to the DOM. */
+function addGreetToDom(greet) {
+  console.log('Adding greet to dom: ' + greet);
+
+  const greetContainer = document.getElementById('greet-container');
+  greetContainer.innerText = greet;
+}
+
+/**
+ * Fetches comments from the servers and adds them to the DOM.
+ */
+function getComments() {
+  
+  fetch('/data').then(response => response.json()).then((comments) => {
+    const commentsListElement = document.getElementById('comments-container');
+    commentsListElement.innerHTML = '';
+    for(let i = 0; i < comments.length; i++){
+        commentsListElement.appendChild(
+            createListElement(comments[i].comment));
+    }
+  });
+}
+
+/** Creates an <li> element containing text. */
+function createListElement(text) {
+  const liElement = document.createElement('li');
+  liElement.innerText = text;
+  return liElement;
+}

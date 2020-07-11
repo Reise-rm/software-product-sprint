@@ -40,6 +40,17 @@
         <a href="images/Fleabag.jpg"><img src="images/Fleabag.jpg"/></a>
         <a href="images/TheEnd.jpg"><img src="images/TheEnd.jpg"/></a>
       </div>
-    </div>
+      <h1>Comments</h1>
+      <p>Click here to see comments about the portfolio:</p>
+      <button onclick="getComments()">Fetch Comments!</button>
+      <ul id="comments-container"></ul>
+
+      <form action="/data" method="POST">
+      <p>Leave Your Comment Here~</p>
+      <textarea name="text-input">Hi</textarea>
+      <br/><br/>
+      <input type="submit" />
+      </form>
+
   </body>
 </html>
