@@ -56,17 +56,10 @@ public class DataServlet extends HttpServlet {
    * Converts an instance into a JSON string using manual String concatentation.
    */
   private String convertToJson(ArrayList<String> messages) {
-    String json = "[";
-    for(int i = 0; i < messages.size(); ++i){
-        if(i != 0)
-            json += ", ";
-        json += '{';
-        json += "\"comment"+ "\": ";
-        json += "\"" + messages.get(i) + "\"";
-        json += '}';
-    }
-    json += "]";
-    return json;
+    String commaSeparatedMessage = messages.stream()
+        .map(msg -> String.format("{"comment": "%s"}", msg))
+        .collect(Collectors.joining(", "));
+    return "[" + commaSeparatedMessage + "]";
   }
 
   @Override
