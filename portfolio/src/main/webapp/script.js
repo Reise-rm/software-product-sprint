@@ -117,3 +117,46 @@ function createListElement(text) {
   liElement.innerText = text;
   return liElement;
 }
+
+/** Creates a map and adds it to the page. */
+function initMap() {
+    const map = new google.maps.Map(
+      document.getElementById('map'),
+      {center: {lat: 35, lng: 100}, zoom: 3});
+
+    addLandmark(
+        map, 32.621730, 121.133739, 'Shanghai',
+        'Shanghai: My hometown! Most of my trips took off here.')
+    addLandmark(
+        map, 19.270599, 110.167190, 'Hainan',
+        'Hainan: We drove to Zhanjiang and crossed to Hainan by ferry several years ago.')
+    addLandmark(
+        map, 22.137448, 100.821124, 'Xishuangbanna',
+        'Xishuangbanna(西双版纳): We celebrated the Spring Festival of 2018 here, it is so amazing to drive on the empty highway and enjoy instant noodles in the highway service area HAHA.')
+    addLandmark(
+        map, 36.653790, 101.760450, 'Xining',
+        'Xining(西宁): In the return trip we met the most terrible road condition around Qinghai Lake and Qilian Mountains, but also the most beautiful views.')
+    addLandmark(
+        map, 43.937425, 87.575440, 'Urumqi',
+        'Urumqi: In the summer of 2018, we drove all the way through Inner Mongolia into Xinjiang, where my favourite scenery lies.')
+    addLandmark(
+        map, 39.023412, 121.608890, 'Dalian',
+        'In the summer of 2017, we drove along the coastline up to Dalian.')
+    addLandmark(
+        map, 49.599107, 117.370050, 'Manzhouli',
+        'Manzhouli(满洲里): In 2018 after I finished my military training, I reached the nearest point to Russia.')
+    addLandmark(
+        map, 29.666642, 91.132954, 'Lhasa',
+        'Lhasa(拉萨): This is my next destination HAHA. Plan to drive there next summer~');
+}
+
+/** Adds a marker that shows an info window when clicked. */
+function addLandmark(map, lat, lng, title, description) {
+  const marker = new google.maps.Marker(
+      {position: {lat: lat, lng: lng}, map: map, title: title});
+
+  const infoWindow = new google.maps.InfoWindow({content: description});
+  marker.addListener('click', () => {
+    infoWindow.open(map, marker);
+  });
+}

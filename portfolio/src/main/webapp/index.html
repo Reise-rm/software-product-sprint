@@ -4,9 +4,10 @@
     <meta charset="UTF-8">
     <title>My Portfolio</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5cHwqHrGWuCjfMAIbonz6q8LjFOlp6Jg"></script>
     <script src="script.js"></script>
   </head>
-  <body>
+  <body onload="initMap();">
     <div id="content">
       <h1>Yanqiong Chen</h1>
       <p>Welcome to my portfolio!</p>
@@ -40,6 +41,10 @@
         <a href="images/Fleabag.jpg"><img src="images/Fleabag.jpg"/></a>
         <a href="images/TheEnd.jpg"><img src="images/TheEnd.jpg"/></a>
       </div>
+      <h3>Places</h3>
+      <p>The following Google Map marks most of the destinations I've driven to.</p>
+      <div id="map"></div>
+      <p>Click the above marks to see a brief intro of my self-driving trip there!</p>
       <h1>Comments</h1>
       <p>Click here to see comments about the portfolio:</p>
       <button onclick="getComments()">Fetch Comments!</button>
