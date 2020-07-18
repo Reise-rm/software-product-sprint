@@ -26,6 +26,7 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import java.util.stream.Collectors;
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
@@ -56,9 +57,9 @@ public class DataServlet extends HttpServlet {
    * Converts an instance into a JSON string using manual String concatentation.
    */
   private String convertToJson(ArrayList<String> messages) {
-    String commaSeparatedMessage = messages.stream()
-        .map(msg -> String.format("{"comment": "%s"}", msg))
-        .collect(Collectors.joining(", "));
+    String commaSeparatedMessage = messages.stream().
+        map(msg -> String.format("{\"comment\": \"%s\"}", msg)).
+        collect(Collectors.joining(", "));
     return "[" + commaSeparatedMessage + "]";
   }
 
