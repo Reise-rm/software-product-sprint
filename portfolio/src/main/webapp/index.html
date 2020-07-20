@@ -4,15 +4,58 @@
     <meta charset="UTF-8">
     <title>My Portfolio</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5cHwqHrGWuCjfMAIbonz6q8LjFOlp6Jg"></script>
     <script src="script.js"></script>
   </head>
-  <body>
+  <body onload="initMap();">
     <div id="content">
-      <h1>My Portfolio</h1>
-      <p>This is my portfolio.</p>
-      <p>Click here to get a random message:</p>
-      <button onclick="addRandomGreeting()">Hello</button>
+      <h1>Yanqiong Chen</h1>
+      <p>Welcome to my portfolio!</p>
+      <p>What makes up my spare time?</p>
+      <button onclick="addRandomGreeting()">Have A Guess!</button>
       <div id="greeting-container"></div>
-    </div>
+      <h2>Brief Self-Introduction</h2>
+      <p>My name is Yanqiong Chen, a junior from Peking University, majoring in Software Engineering.</p>
+      <a href="https://github.com/Reise-rm">Visit my Github!</a>
+      <h2>My Spare Time</h2>
+      <h3>Music</h3>
+      <p>My Favourite Singers/Producers:</p>
+      <button onclick="addRandomSingers()">Here They Come!</button>
+      <div id="singer-container"></div>
+      <p>The album I'm listening to now:</p>
+      <div class="image-thumbnails">
+        <a href="images/Bruno_Major.jpg"><img src="images/Bruno_Major.jpg"/></a>
+      </div>
+      <h3>Stories</h3>
+      <p>Some books or movies I come up with:</p>
+      <button onclick="addRandomStories()">Here They Are!</button>
+      <div id="story-container"></div>
+      <p>The book I'm reading now:</p>
+      <div class="image-thumbnails">
+        <a href="images/wuyouyuan.jpg"><img src="images/wuyouyuan.jpg"/></a>
+      </div>
+      <p>Some movie scenes that I really love:</p>
+      <div class="image-thumbnails">
+        <a href="images/GreenBook.jpg"><img src="images/GreenBook.jpg"/></a>
+        <a href="images/baoyu.jpg"><img src="images/baoyu.jpg"/></a>
+        <a href="images/Fleabag.jpg"><img src="images/Fleabag.jpg"/></a>
+        <a href="images/TheEnd.jpg"><img src="images/TheEnd.jpg"/></a>
+      </div>
+      <h3>Places</h3>
+      <p>The following Google Map marks most of the destinations I've driven to.</p>
+      <div id="map"></div>
+      <p>Click the above marks to see a brief intro of my self-driving trip there!</p>
+      <h1>Comments</h1>
+      <p>Click here to see comments about the portfolio:</p>
+      <button onclick="getComments()">Fetch Comments!</button>
+      <ul id="comments-container"></ul>
+
+      <form action="/data" method="POST">
+      <p>Leave Your Comment Here~</p>
+      <textarea name="text-input">Hi</textarea>
+      <br/><br/>
+      <input type="submit" />
+      </form>
+
   </body>
 </html>
